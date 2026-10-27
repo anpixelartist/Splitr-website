@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Splitr Privacy Policy</title>
+  <meta name="description" content="What Splitr stores, who can see it, and how to have it deleted.">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="connector.html">AI Connector</a>
+      <a href="index.html#install">Install</a>
+      <a href="developers.html">Developers</a>
+      <a href="support.html">Support</a>
+      <a class="btn btn-primary btn-sm" data-link="app" href="https://splitr-bills.web.app">Open Splitr</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="container page-hero">
+    <span class="eyebrow">Privacy</span>
+    <h1 style="font-size:clamp(2rem,5vw,3.2rem)">Privacy Policy</h1>
+    <p class="lead">The short version: we store only what's needed to split expenses, show it only to the people in your group, and never sell it, track you or show ads.</p>
+    <p class="muted" style="margin-top:12px">Last updated: 28 October 2026</p>
+  </div>
+
+  <div class="container docs">
+    <nav class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <ul>
+        <li><a href="#what">What we store</a></li>
+        <li><a href="#who">Who can see it</a></li>
+        <li><a href="#services">Services we use</a></li>
+        <li><a href="#device">On your device</a></li>
+        <li><a href="#connector">AI Connector</a></li>
+        <li><a href="#dont">What we don't do</a></li>
+        <li><a href="#your-rights">Your choices</a></li>
+        <li><a href="#changes">Changes &amp; contact</a></li>
+      </ul>
+    </nav>
+
+    <article class="prose">
+      <h2 id="what">What we store</h2>
+      <ul>
+        <li><b>Account:</b> if you sign in with Google, the sign-in identifier and basic profile Google shares with Firebase Authentication (name, email address, profile photo URL). Guest accounts get an anonymous identifier only.</li>
+        <li><b>Profile:</b> the display name you choose, and your contacts list (names of people you've added to groups) so you can add them again quickly.</li>
+        <li><b>Groups:</b> group name, currency, members and their display names, name-only participants you add, admins, and the invite code.</li>
+        <li><b>Expenses and payments:</b> descriptions, amounts, who paid, how it was split, who recorded or edited it, and when.</li>
+      </ul>
+      <p>We don't collect your location, phone contacts, payment or bank details.</p>
+
+      <h2 id="who">Who can see it</h2>
+      <ul>
+        <li>A group's details, expenses and payments are visible only to that group's <b>members</b>.</li>
+        <li>Your profile and contacts are visible only to <b>you</b>.</li>
+        <li>Anyone who knows a group's invite code can join it and then see that group. Share codes only with people in the group.</li>
+      </ul>
+      <p>These rules are enforced on the server by <a data-link="rules" href="https://github.com/anpixelartist/Splitr/blob/main/firestore.rules">Firestore security rules</a>, which are public in our source code.</p>
+
+      <h2 id="services">Services we use</h2>
+      <p>Splitr runs on <b>Google Firebase</b> (Hosting, Authentication and Cloud Firestore), which processes and stores the data above on our behalf. Google's terms and the <a href="https://firebase.google.com/support/privacy" rel="noopener">Firebase privacy information</a> apply to that processing. The website loads fonts from Google Fonts. If you use the AI Connector, it runs on <b>Cloudflare Workers</b>, which handles those requests and keeps the connector's sign-in records (see below).</p>
+
+      <h2 id="device">On your device</h2>
+      <p>The app keeps a copy of your groups and settings in your browser's local storage so it works offline and opens instantly. It also remembers your theme choice. It doesn't use advertising or tracking cookies. Clearing your browser's site data removes the local copy. Data already synced stays in your account.</p>
+
+      <h2 id="connector">AI Connector</h2>
+      <p>If you connect the <a href="connector.html">Splitr AI Connector</a> to an assistant such as Claude or ChatGPT:</p>
+      <ul>
+        <li>You sign in with Google on a Splitr page. The connector keeps your Firebase sign-in token, encrypted with a key only your assistant's token can unlock. Access tokens are stored only as hashes, on Cloudflare.</li>
+        <li>It reads and writes your Splitr data only when your assistant calls one of its tools, and only what you could access in the app.</li>
+        <li>It doesn't keep a copy of your groups or expenses.</li>
+        <li>The results it returns (balances, expense descriptions, people's display names) go to your assistant provider and are handled under <b>their</b> privacy policy.</li>
+        <li>Disconnecting Splitr in your assistant ends access. Signing out of Google everywhere, or deleting your account, cuts it off at the next refresh.</li>
+      </ul>
+
+      <h2 id="dont">What we don't do</h2>
+      <ul>
+        <li>No ads, no analytics, no third-party trackers.</li>
+        <li>We don't sell or rent your data, or share it for marketing.</li>
+        <li>We don't move money or ask for card or bank details.</li>
+      </ul>
+
+      <h2 id="your-rights">Your choices</h2>
+      <ul>
+        <li><b>Correct:</b> change your display name in Profile. Edit expenses you added.</li>
+        <li><b>Delete:</b> admins can delete expenses and groups in the app. To delete your account and profile, <a data-link="question" href="https://github.com/anpixelartist/Splitr/issues/new">contact us</a> and we'll remove them. Expenses you added to shared groups stay with the group, because other members rely on them for their balances.</li>
+        <li><b>Access:</b> ask us for a copy of the data linked to your account.</li>
+      </ul>
+
+      <h2 id="changes">Changes &amp; contact</h2>
+      <p>If this policy changes, we'll update the date above. For significant changes we'll show a notice in the app. Questions? <a data-link="question" href="https://github.com/anpixelartist/Splitr/issues/new">Get in touch</a>.</p>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+        <p class="muted" style="margin-top:12px;max-width:320px">Split group expenses fairly and settle up. Free and open source.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a data-link="app" href="https://splitr-bills.web.app">Open the app</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#install">Install</a></li>
+          <li><a href="connector.html">AI Connector</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="developers.html">Documentation</a></li>
+          <li><a href="developers.html#self-host">Self-host</a></li>
+          <li><a href="connector.html#tools">MCP tools</a></li>
+          <li><a data-link="repo" href="https://github.com/anpixelartist/Splitr">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a data-link="bug" href="https://github.com/anpixelartist/Splitr/issues/new">Report a bug</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="support.html#security">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Splitr. Apache-2.0 licensed.</span>
+      <span>Made for friends who split things.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

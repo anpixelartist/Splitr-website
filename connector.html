@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Splitr AI Connector (MCP)</title>
+  <meta name="description" content="Use Splitr from Claude, ChatGPT and other AI assistants. The Splitr MCP server reads your groups and records expenses with your own permissions.">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="connector.html" aria-current="page">AI Connector</a>
+      <a href="index.html#install">Install</a>
+      <a href="developers.html">Developers</a>
+      <a href="support.html">Support</a>
+      <a class="btn btn-primary btn-sm" data-link="app" href="https://splitr-bills.web.app">Open Splitr</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="container page-hero">
+    <span class="eyebrow">AI Connector · MCP server</span>
+    <h1 style="font-size:clamp(2rem,5vw,3.2rem)">Splitr, inside your AI assistant</h1>
+    <p class="lead">One connector for Claude, ChatGPT and any assistant that speaks the Model Context Protocol. Ask about balances in plain language, or have it log an expense for you after you approve it.</p>
+    <div class="btn-row" style="margin-top:24px"><a class="btn btn-primary" href="#connect">Connect your assistant</a><a class="btn btn-secondary" href="#tools">See the tools</a></div>
+    <p style="margin-top:16px"><span class="pill green" data-connector-status>Available</span></p>
+  </div>
+
+  <div class="container docs">
+    <nav class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <ul>
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#status">Status</a></li>
+        <li><a href="#connect">Connect it</a></li>
+        <li><a href="#tools">Tools</a></li>
+        <li><a href="#examples">Example prompts</a></li>
+        <li><a href="#security">Security &amp; privacy</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#connector-faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <article class="prose">
+      <h2 id="overview">Overview</h2>
+      <p>The Splitr connector is a remote <a href="https://modelcontextprotocol.io" rel="noopener">MCP</a> server. Add it to your assistant, sign in with the Google account you use for Splitr, and the assistant can:</p>
+      <ul>
+        <li>list your groups and your balance in each,</li>
+        <li>summarise a group: who owes whom, and the shortest way to settle,</li>
+        <li>search recent expenses,</li>
+        <li>show payments waiting for your confirmation,</li>
+        <li>add an expense, or record, confirm or reject a payment, after telling you exactly what it will save and getting your OK.</li>
+      </ul>
+      <p>The numbers always match the app: the connector uses the same balance, settle-up, claims and money-formatting code as Splitr itself, and it can see and do exactly what you can in the app. Nothing more.</p>
+
+      <h2 id="status">Status</h2>
+      <div class="callout info" data-when-live>
+        <strong>Live</strong>
+        <p>The connector is deployed and in use, with all nine tools (five read-only, four that write). It runs on Cloudflare Workers' free plan, so it costs nothing to use.</p>
+      </div>
+      <div class="callout warn" data-when-not-live hidden>
+        <strong>Not public yet</strong>
+        <p>The connector isn't available right now. Watch the <a data-link="repo" href="https://github.com/anpixelartist/Splitr">GitHub repo</a> for updates.</p>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Assistant</th><th>Support</th></tr></thead>
+          <tbody>
+            <tr><td>Claude (web, desktop, mobile)</td><td><span class="pill green">Works</span> As a custom connector. Free plans allow one custom connector.</td></tr>
+            <tr><td>ChatGPT</td><td><span class="pill green">Works</span> As a connector in developer mode. Which plans get developer mode changes over time, so check your account.</td></tr>
+            <tr><td>Claude Code, Cursor, VS Code and other MCP clients</td><td><span class="pill gray">Should work</span> Any client that supports remote Streamable HTTP servers with OAuth. Not individually tested.</td></tr>
+            <tr><td>Gemini</td><td><span class="pill gray">Varies</span> Depends on the Gemini product: some personal accounts have a Connected Apps option, Gemini Enterprise/Business admins can add servers, and Gemini CLI is an MCP client. Not yet confirmed by Google's own documentation.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="connect">Connect it</h2>
+      <p>You'll need a Splitr account signed in with <b>Google</b>. Guest accounts ("continue without account") are turned away at sign-in. Switch to Google in the app's Profile screen first.</p>
+      <p>The connector's address (it must end in <code>/mcp</code>):</p>
+      <pre data-copy><code data-mcp-url>https://splitr-mcp.splitr-mcp.workers.dev/mcp</code></pre>
+
+      <h3>Claude</h3>
+      <ol>
+        <li>Open <b>Settings → Connectors</b> and choose <b>Add custom connector</b>.</li>
+        <li>Name it <code>Splitr</code>, paste the address above, and click <b>Add</b>.</li>
+        <li>Click <b>Connect</b>. A window opens: check that the app is Splitr and that "Access goes to" shows <code>splitr-mcp.splitr-mcp.workers.dev</code>, then tap <b>Sign in with Google to connect Splitr</b> and pick your account.</li>
+        <li>In a chat, turn Splitr on from the tools menu and ask away.</li>
+      </ol>
+
+      <h3>ChatGPT</h3>
+      <ol>
+        <li>Open <b>Settings → Apps &amp; Connectors → Advanced settings</b> and turn on <b>Developer mode</b>.</li>
+        <li>Choose <b>Create</b>, name it <code>Splitr</code>, paste the address, and set Authentication to <b>OAuth</b>. Leave Client ID and secret empty: ChatGPT registers itself.</li>
+        <li>Sign in with Google when asked, then pick Splitr from the tools in a new chat.</li>
+      </ol>
+
+      <h3>Claude Code and other MCP clients</h3>
+      <pre data-copy><code>claude mcp add --transport http splitr <span data-mcp-url>https://splitr-mcp.splitr-mcp.workers.dev/mcp</span></code></pre>
+      <p>Then run <code>/mcp</code> in Claude Code to sign in. Other clients take the same URL as a "remote" or "Streamable HTTP" server.</p>
+      <p class="muted">Menu names in assistants change often. If a step doesn't match, look for "connectors", "integrations" or "MCP servers" in settings.</p>
+
+      <h2 id="tools">Tools</h2>
+      <p>These are the actions the connector gives your assistant. Amounts are always in each group's own currency, and amounts in different currencies are never added together.</p>
+
+      <h3>Read-only <span class="pill green">Safe to call any time</span></h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>list_groups</code></td><td>Your groups: code, currency, number of people, and your net balance in each.</td></tr>
+            <tr><td><code>get_group_summary</code></td><td>One group by name, partial name or code (asks you when a name matches several): people, balances, and "who pays whom".</td></tr>
+            <tr><td><code>list_expenses</code></td><td>Recent expenses in a group, newest first, with your share. Filter by text in the description or payer. Shows 10 by default, up to 50.</td></tr>
+            <tr><td><code>my_balances</code></td><td>Across all groups: who you owe and who owes you, per person and per currency.</td></tr>
+            <tr><td><code>list_pending_payments</code></td><td>Payments waiting for you to confirm, and yours waiting on others. Optionally for one group.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>Write <span class="pill">Asks before saving</span></h3>
+      <p>Assistants ask you before using these. Each one saves exactly what the app would, follows the same rules, and replies with exactly what was saved.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Tool</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>add_expense</code></td><td>Adds an expense: who paid (default: you), split equally between everyone or named people, or by exact shares. Split to the cent in the group's currency, and checked like the app checks it.</td></tr>
+            <tr><td><code>record_payment</code></td><td>Records a payment from the group's "who pays whom" plan, in full or in part, up to what's owed. It stays pending until the receiver confirms, just like in the app.</td></tr>
+            <tr><td><code>confirm_payment</code></td><td>Confirms a pending payment made to you.</td></tr>
+            <tr><td><code>reject_payment</code></td><td>Rejects a pending payment made to you that didn't happen. Marked as destructive, so assistants take extra care.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>There's deliberately no tool to delete or edit groups or expenses, cancel payments, or join a group. Those stay in the app, where deletes come with an Undo.</p>
+
+      <h2 id="examples">Example prompts</h2>
+      <ul class="prompt-list">
+        <li>"What do I owe in the Goa Trip group?"</li>
+        <li>"Across all my groups, who owes me the most?"</li>
+        <li>"Show the last 10 expenses in Flat 4B with 'groceries'"</li>
+        <li>"Add ₹1,200 for dinner in Goa Trip, paid by me, split equally"</li>
+        <li>"Split $90 for the cab between me, Sam and Alex"</li>
+        <li>"Record that Priya paid me ₹500"</li>
+        <li>"Any payments I need to confirm?"</li>
+      </ul>
+
+      <h2 id="security">Security &amp; privacy</h2>
+      <ul>
+        <li><b>It acts as you, never as an admin.</b> There's no admin key or service account. Every request carries your own short-lived Firebase sign-in token, so Splitr's server-side security rules apply exactly as in the app. The connector can't see groups you're not in. Automated tests against the real rules prove it.</li>
+        <li><b>Sign-in stays with Google.</b> You sign in on a Splitr page using Google. Your assistant never sees your password or your Google account.</li>
+        <li><b>Encrypted, minimal storage.</b> Access tokens are stored only as hashes. Your Firebase sign-in token is encrypted with a key that only your assistant's token can unlock. The connector keeps no copy of your groups or expenses.</li>
+        <li><b>You approve every change.</b> Write tools are flagged so assistants ask first, and the connector tells them to show you exactly what will be saved.</li>
+        <li><b>Turn it off any time.</b> Disconnect Splitr in your assistant's settings and access ends. Signing out of Google everywhere, or deleting your Splitr account, also cuts it off at the next refresh.</li>
+      </ul>
+      <p>Your assistant provider's own privacy terms cover what it does with the answers it receives. See <a href="privacy.html#connector">Privacy</a> for details.</p>
+
+      <h2 id="architecture">Architecture</h2>
+      <p>For developers, here's how it fits together. The source is in <a data-link="mcpReadme" href="https://github.com/anpixelartist/Splitr/blob/main/mcp/README.md"><code>mcp/</code></a> in the Splitr repo.</p>
+      <pre><code>Assistant ──OAuth 2.1 (DCR / CIMD, PKCE)──▶ Worker /authorize ──▶ "Sign in with Google" (Firebase Auth)
+    │                                              └─ Firebase refresh token → encrypted in the OAuth grant
+    │
+    └──MCP (Streamable HTTP) + access token──▶ Worker /mcp
+                                                   │  refresh token → ID token (cached ~55 min)
+                                                   └─ Firestore REST as the user ──▶ firestore.rules decide</code></pre>
+      <ul>
+        <li><b>Runtime:</b> Cloudflare Workers (free plan) with <code>@cloudflare/workers-oauth-provider</code> and the MCP TypeScript server SDK. Stateless: every request builds a fresh server bound to that person, so no Durable Objects are needed.</li>
+        <li><b>Shared logic:</b> imports <code>settlement.ts</code>, <code>claims.ts</code>, <code>payments.ts</code> and <code>money.ts</code> straight from the app, so balances can't drift.</li>
+        <li><b>Tested</b> with unit tests (names, claims, balances, currencies, the exact writes), integration tests on the Auth + Firestore emulators, and the MCP Inspector.</li>
+      </ul>
+      <p>Want to run your own? See <a href="developers.html#mcp">Developers → MCP server</a>.</p>
+
+      <h2 id="connector-faq">FAQ</h2>
+      <div class="faq" style="margin:0">
+        <details>
+          <summary>Does the connector cost anything?</summary>
+          <div><p>No. It runs on Cloudflare's and Firebase's free plans, like the app.</p></div>
+        </details>
+        <details>
+          <summary>Can the assistant delete or edit my expenses?</summary>
+          <div><p>No. There are no delete or edit tools. It can add expenses and record, confirm or reject payments, and only after you approve each one.</p></div>
+        </details>
+        <details>
+          <summary>Why can't I connect a guest account?</summary>
+          <div><p>Guest accounts live only on one device, so there's no way to sign in to them from somewhere else. Switch to Google in the app's Profile screen, then connect.</p></div>
+        </details>
+        <details>
+          <summary>Adding the connector fails straight away</summary>
+          <div><p>Check that the address ends in <code>/mcp</code>. The address without it won't work as a connector.</p></div>
+        </details>
+        <details>
+          <summary>The assistant asks me to reconnect</summary>
+          <div><p>That happens after you sign out of Google everywhere or your sign-in expires. Click Connect again and sign in. Nothing in Splitr is lost.</p></div>
+        </details>
+        <details>
+          <summary>The assistant picked the wrong group</summary>
+          <div><p>Use the group's exact name, or its 6-character code. When a name matches more than one group, the connector tells the assistant to check with you.</p></div>
+        </details>
+      </div>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+        <p class="muted" style="margin-top:12px;max-width:320px">Split group expenses fairly and settle up. Free and open source.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a data-link="app" href="https://splitr-bills.web.app">Open the app</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#install">Install</a></li>
+          <li><a href="connector.html">AI Connector</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="developers.html">Documentation</a></li>
+          <li><a href="developers.html#self-host">Self-host</a></li>
+          <li><a href="connector.html#tools">MCP tools</a></li>
+          <li><a data-link="repo" href="https://github.com/anpixelartist/Splitr">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a data-link="bug" href="https://github.com/anpixelartist/Splitr/issues/new">Report a bug</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="support.html#security">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Splitr. Apache-2.0 licensed.</span>
+      <span>Made for friends who split things.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

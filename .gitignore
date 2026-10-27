@@ -1,0 +1,10 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Firebase CLI state (project alias names the deploy target)
+.firebase/
+.firebaserc
+firebase-debug.log

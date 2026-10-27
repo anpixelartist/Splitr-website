@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Splitr Developer Docs</title>
+  <meta name="description" content="Run Splitr locally, self-host it for free on Firebase, understand its data model and security rules, and build on the Splitr MCP server.">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="connector.html">AI Connector</a>
+      <a href="index.html#install">Install</a>
+      <a href="developers.html" aria-current="page">Developers</a>
+      <a href="support.html">Support</a>
+      <a class="btn btn-primary btn-sm" data-link="app" href="https://splitr-bills.web.app">Open Splitr</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="container page-hero">
+    <span class="eyebrow">Developers</span>
+    <h1 style="font-size:clamp(2rem,5vw,3.2rem)">Build, run and extend Splitr</h1>
+    <p class="lead">Splitr is open source under Apache-2.0. Run it locally in a minute, host your own copy for $0, or build on top of it.</p>
+    <div class="btn-row" style="margin-top:24px">
+      <a class="btn btn-primary" data-link="repo" href="https://github.com/anpixelartist/Splitr">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.04 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.58.23 2.75.11 3.04.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>
+        View on GitHub
+      </a>
+      <a class="btn btn-secondary" href="#self-host">Self-host for free</a>
+    </div>
+  </div>
+
+  <div class="container docs">
+    <nav class="toc" aria-label="On this page">
+      <p>On this page</p>
+      <ul>
+        <li><a href="#quick-start">Quick start</a></li>
+        <li><a href="#stack">Tech stack</a></li>
+        <li><a href="#layout">Project layout</a></li>
+        <li><a href="#scripts">Scripts</a></li>
+        <li><a href="#data-model">Data model</a></li>
+        <li><a href="#permissions">Permissions</a></li>
+        <li><a href="#self-host">Self-host</a></li>
+        <li><a href="#mcp">MCP server</a></li>
+        <li><a href="#contributing">Contributing</a></li>
+        <li><a href="#license">License</a></li>
+      </ul>
+    </nav>
+
+    <article class="prose">
+      <h2 id="quick-start">Quick start</h2>
+      <p>You need <b>Node.js 20+</b> and Git.</p>
+      <pre data-copy><code>git clone https://github.com/anpixelartist/Splitr.git
+cd Splitr
+npm install
+npm run dev</code></pre>
+      <div class="callout info">
+        <strong>No Firebase keys? No problem.</strong>
+        <p>Without a <code>.env.local</code>, Splitr runs in <b>local-only mode</b>: a mock identity, data stored in your browser, and no network calls. That's ideal for UI work. To sync between devices, add Firebase keys (see <a href="#self-host">Self-host</a>).</p>
+      </div>
+
+      <h2 id="stack">Tech stack</h2>
+      <ul>
+        <li><b>Frontend:</b> React 19, TypeScript, Vite, Tailwind CSS, React Router</li>
+        <li><b>Backend:</b> Firebase Authentication (Google + anonymous) and Cloud Firestore with offline persistence. No custom server for the app itself.</li>
+        <li><b>AI connector:</b> Cloudflare Worker with OAuth 2.1 and the MCP TypeScript SDK (see <a href="#mcp">MCP server</a>)</li>
+        <li><b>App shell:</b> installable PWA via <code>vite-plugin-pwa</code></li>
+        <li><b>Quality:</b> Vitest unit tests, Firestore rules tests on the emulator, oxlint, GitHub Actions CI</li>
+      </ul>
+
+      <h2 id="layout">Project layout</h2>
+      <pre><code>src/
+  context/AuthContext.tsx   sign-in, account linking, profile &amp; contacts
+  context/GroupContext.tsx  groups, expenses, settlements (Firestore + local cache)
+  lib/settlement.ts         balance maths, settlement plan, cent-exact splitting
+  lib/claims.ts             resolving name-only participants claimed by real users
+  lib/payments.ts           payment status: pending / confirmed / rejected / cancelled
+  lib/money.ts              currencies and locale-aware formatting
+  pages/, components/       UI
+firestore.rules             who can read/write what (the real security boundary)
+rules-tests/                tests for the rules
+firebase.json               hosting + rules + emulator config
+mcp/                        AI connector: Cloudflare Worker (MCP server + OAuth)</code></pre>
+
+      <h2 id="scripts">Scripts</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>npm run dev</code></td><td>Dev server with hot reload</td></tr>
+            <tr><td><code>npm run build</code></td><td>Type-check and production build into <code>dist/</code></td></tr>
+            <tr><td><code>npm test</code></td><td>Unit tests (<code>src/**/*.test.ts</code>)</td></tr>
+            <tr><td><code>npm run test:rules</code></td><td>Firestore security-rules tests on the emulator (needs Java 11+)</td></tr>
+            <tr><td><code>npm run lint</code></td><td>oxlint</td></tr>
+            <tr><td><code>npm run deploy</code></td><td>Build and deploy hosting + rules to Firebase</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="data-model">Data model</h2>
+      <p>Four Firestore collections. The group code doubles as the invite.</p>
+      <pre><code>users/{uid}                     { name, contacts[] }
+groups/{code}                   { name, members[], admins[], memberNames{}, participants[],
+                                  claims{}, currency, createdBy }
+groups/{code}/expenses/{id}     { description, amount, paidBy, splits[], createdBy, createdAt,
+                                  editedBy?, editedAt? }
+groups/{code}/settlements/{id}  { from, to, amount, recordedBy, createdAt, status, recordedAt,
+                                  decidedBy?, decidedAt? }</code></pre>
+      <ul>
+        <li><b>Participants and claims.</b> People without the app are name-only <code>participants</code>. When they join, they can claim their participant. <code>claims</code> maps participant id → uid, and every balance is read through it, so no expense is ever rewritten.</li>
+        <li><b>Splits.</b> <code>splits[]</code> holds <code>{ userId, amount }</code> per person. Equal splits are cent-exact using the currency's minor units (0 digits for JPY, KRW, VND).</li>
+        <li><b>Currency.</b> One ISO 4217 code per group. Older groups default to USD.</li>
+      </ul>
+
+      <h2 id="permissions">Permissions</h2>
+      <p><a data-link="rules" href="https://github.com/anpixelartist/Splitr/blob/main/firestore.rules"><code>firestore.rules</code></a> is the security boundary. The client is never trusted.</p>
+      <ul>
+        <li>Any signed-in user can look up a group by its <b>exact code</b> and join. Groups can't be listed except your own (<code>members array-contains uid</code>).</li>
+        <li>Expenses and settlements are visible to <b>members only</b>.</li>
+        <li>The person who added an expense, or an admin, can edit it. It keeps its date, and edits are stamped with who and when. Admins delete, with a 5-second Undo in the UI.</li>
+        <li>Recorded payments are never removed by deleting an expense, because they're money that really changed hands.</li>
+        <li>A payment counts once the receiver confirms it: immediately if the receiver recorded it or is name-only, otherwise automatically after 7 days of server time. The receiver can reject or undo, and the recorder can cancel while it's pending.</li>
+      </ul>
+
+      <h2 id="self-host">Self-host for $0</h2>
+      <p>Run your own Splitr for your friends on Firebase's free <b>Spark</b> plan. It needs no credit card, so you can't be charged even by accident. Setup takes about 20 minutes.</p>
+      <ol>
+        <li>Create a Firebase project (Analytics off) and confirm it's on <b>Spark</b>.</li>
+        <li>Create a <b>Firestore</b> database (Standard, production mode, region near your group).</li>
+        <li>Enable <b>Google</b> and <b>Anonymous</b> sign-in under Authentication.</li>
+        <li>Register a web app and copy its config into <code>.env.local</code> (start from <code>.env.example</code>).</li>
+        <li>Link the folder and deploy:
+          <pre data-copy><code>npx firebase-tools@15 login
+npx firebase-tools@15 use --add
+npm run deploy</code></pre></li>
+        <li>Add your <code>*.web.app</code> domain to the Google OAuth client's authorised origins and redirect URIs, so sign-in works on phones.</li>
+      </ol>
+      <p>The full, step-by-step guide covers CI deploys on merge to <code>main</code>, custom domains and free-tier limits: <a data-link="deployment" href="https://github.com/anpixelartist/Splitr/blob/main/DEPLOYMENT.md">DEPLOYMENT.md</a>.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Free limit (Spark)</th><th>Typical use, ~20 people</th></tr></thead>
+          <tbody>
+            <tr><td>50,000 Firestore reads / day</td><td>3,000 to 10,000</td></tr>
+            <tr><td>20,000 Firestore writes / day</td><td>under 500</td></tr>
+            <tr><td>1 GiB Firestore storage</td><td>under 5 MB</td></tr>
+            <tr><td>360 MB hosting transfer / day</td><td>about 1 MB per person per release</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 id="mcp">MCP server</h2>
+      <p>The <a href="connector.html">Splitr AI Connector</a> is a remote MCP server in the repo's <code>mcp/</code> folder. It runs on Cloudflare Workers (free plan) at <code>https://splitr-mcp.splitr-mcp.workers.dev/mcp</code>. <span class="pill green" data-connector-status>Available</span></p>
+      <h3>Design rules</h3>
+      <ul>
+        <li><b>Acts as the user.</b> No Firebase Admin SDK or service account. Every Firestore REST call carries the user's own ID token, so <code>firestore.rules</code> decides everything. <code>test/integration</code> proves it against the emulators.</li>
+        <li><b>OAuth 2.1 + PKCE</b> with dynamic client registration and Client ID Metadata Documents (<code>@cloudflare/workers-oauth-provider</code>). <code>/authorize</code> signs in with Firebase Auth (Google). The Firebase refresh token is encrypted in the grant's props and swapped for an ID token (cached about 55 minutes) per call. KV holds OAuth state only.</li>
+        <li><b>Stateless.</b> Each request builds a fresh MCP server bound to that person (<code>@modelcontextprotocol/server</code>), so no Durable Objects are needed.</li>
+        <li><b>Shared business logic.</b> Imports <code>../src/lib</code> and <code>../src/types</code> directly, so the connector's numbers always match the app.</li>
+        <li><b>Guest accounts are refused</b> at sign-in, with a message to switch to Google first.</li>
+      </ul>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>File</th><th>What it does</th></tr></thead>
+          <tbody>
+            <tr><td><code>src/index.ts</code></td><td>Worker entry: OAuth provider, routes, <code>/mcp</code></td></tr>
+            <tr><td><code>src/server.ts</code></td><td>MCP server and the list of tools</td></tr>
+            <tr><td><code>src/auth.ts</code></td><td><code>/authorize</code> consent and Google sign-in page, refresh-time checks</td></tr>
+            <tr><td><code>src/token.ts</code></td><td>Firebase Secure Token exchange and ID-token cache</td></tr>
+            <tr><td><code>src/firestore.ts</code></td><td>Thin Firestore REST client that acts as the user</td></tr>
+            <tr><td><code>src/group.ts</code></td><td>Loads a group like the app does: names, balances, fuzzy group matching</td></tr>
+            <tr><td><code>src/tools/*.ts</code></td><td>One file per tool (<a href="connector.html#tools">reference</a>)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h3>Deploy your own</h3>
+      <pre data-copy><code>cd mcp
+npm install
+npx wrangler login
+npx wrangler kv namespace create OAUTH_KV   # put the printed id in wrangler.toml
+npx wrangler secret put FIREBASE_API_KEY    # same values as the app's VITE_FIREBASE_*
+npx wrangler secret put FIREBASE_AUTH_DOMAIN
+npx wrangler secret put FIREBASE_PROJECT_ID
+npm run deploy</code></pre>
+      <p>Then add the Worker's host (for example <code>splitr-mcp.&lt;your-subdomain&gt;.workers.dev</code>) under Firebase Authentication → Settings → <b>Authorized domains</b>. Otherwise sign-in shows <code>auth/unauthorized-domain</code>. Your connector URL is that address plus <code>/mcp</code>.</p>
+      <h3>Local development</h3>
+      <p>Needs Java 21+ for the Firestore emulator.</p>
+      <pre data-copy><code># Terminal 1 (repo root): emulators with the real firestore.rules
+npx firebase-tools@15 emulators:start --only auth,firestore --project demo-splitr
+
+# Terminal 2 (mcp/)
+cp .dev.vars.example .dev.vars
+npm run dev                               # http://localhost:8787/mcp
+npx @modelcontextprotocol/inspector       # Streamable HTTP, then "Quick OAuth Flow"</code></pre>
+      <pre data-copy><code>npm test                   # unit tests (mocked Firestore)
+npm run test:integration   # Auth + Firestore emulators, real rules
+npm run typecheck</code></pre>
+      <h3>Free-tier headroom</h3>
+      <ul>
+        <li><b>Workers:</b> 100,000 requests a day. One tool call is one request.</li>
+        <li><b>KV:</b> 100,000 reads and 1,000 writes a day. Writes happen only on connect and token refresh.</li>
+        <li><b>Firestore (Spark):</b> 50,000 reads a day. An overview call for someone in 5 groups of 100 expenses reads about 500 documents, so ~20 people asking a few questions a day fit comfortably.</li>
+        <li><b>Bundle:</b> about 270 KB gzipped, against a 3 MB limit.</li>
+      </ul>
+      <p>Full guide, including adding it to each assistant: <a data-link="mcpReadme" href="https://github.com/anpixelartist/Splitr/blob/main/mcp/README.md"><code>mcp/README.md</code></a>.</p>
+
+      <h2 id="contributing">Contributing</h2>
+      <p>Bug fixes, translations and ideas are welcome.</p>
+      <ol>
+        <li>Check <a data-link="repo" href="https://github.com/anpixelartist/Splitr">open issues</a>, or <a data-link="feature" href="https://github.com/anpixelartist/Splitr/issues/new">open one</a> to discuss bigger changes first.</li>
+        <li>Branch off <code>main</code> using <code>feat/…</code> or <code>fix/…</code>.</li>
+        <li>Make sure these pass before opening a PR:
+          <pre data-copy><code>npm run lint &amp;&amp; npm test &amp;&amp; npm run build &amp;&amp; npm run test:rules</code></pre></li>
+        <li>If you change <code>firestore.rules</code>, add tests in <code>rules-tests/</code>.</li>
+        <li>Open a pull request to <code>main</code>. CI runs the checks, and merges deploy automatically.</li>
+      </ol>
+      <p>Found a security problem? Please report it privately (see <a href="support.html#security">Security</a>), not in a public issue.</p>
+
+      <h2 id="license">License</h2>
+      <p>Splitr is released under the <a data-link="license" href="https://github.com/anpixelartist/Splitr/blob/main/LICENSE">Apache License 2.0</a>. You can use, modify and redistribute it, including commercially, as long as you keep the licence and notices.</p>
+    </article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+        <p class="muted" style="margin-top:12px;max-width:320px">Split group expenses fairly and settle up. Free and open source.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a data-link="app" href="https://splitr-bills.web.app">Open the app</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#install">Install</a></li>
+          <li><a href="connector.html">AI Connector</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="developers.html">Documentation</a></li>
+          <li><a href="developers.html#self-host">Self-host</a></li>
+          <li><a href="connector.html#tools">MCP tools</a></li>
+          <li><a data-link="repo" href="https://github.com/anpixelartist/Splitr">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a data-link="bug" href="https://github.com/anpixelartist/Splitr/issues/new">Report a bug</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="support.html#security">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Splitr. Apache-2.0 licensed.</span>
+      <span>Made for friends who split things.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>

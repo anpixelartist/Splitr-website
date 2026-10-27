@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Splitr Support</title>
+  <meta name="description" content="Help with Splitr: installing, groups and invites, guest and Google accounts, payments, currencies, and how to report a bug.">
+  <meta name="theme-color" content="#f5f5f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="container nav" aria-label="Main">
+    <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+    <div class="nav-links" id="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="connector.html">AI Connector</a>
+      <a href="index.html#install">Install</a>
+      <a href="developers.html">Developers</a>
+      <a href="support.html" aria-current="page">Support</a>
+      <a class="btn btn-primary btn-sm" data-link="app" href="https://splitr-bills.web.app">Open Splitr</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="container page-hero center">
+    <span class="eyebrow">Support</span>
+    <h1 style="font-size:clamp(2rem,5vw,3.2rem)">How can we help?</h1>
+    <p class="lead">Answers to common questions, and how to reach us when something isn't right.</p>
+  </div>
+
+  <div class="container">
+    <div class="grid grid-3" style="margin-bottom:72px">
+      <a class="card" href="#getting-started" style="text-decoration:none">
+        <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></svg></div>
+        <h3 style="color:var(--text)">Getting started</h3>
+        <p>Installing, creating a group, inviting friends.</p>
+      </a>
+      <a class="card" href="#accounts" style="text-decoration:none">
+        <div class="icon-badge amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></svg></div>
+        <h3 style="color:var(--text)">Accounts &amp; sign-in</h3>
+        <p>Guest mode, Google, switching devices.</p>
+      </a>
+      <a class="card" href="#money" style="text-decoration:none">
+        <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg></div>
+        <h3 style="color:var(--text)">Expenses &amp; payments</h3>
+        <p>Splits, edits, confirmations, currencies, AI connector.</p>
+      </a>
+    </div>
+
+    <div class="faq">
+      <h2 id="getting-started" style="font-size:1.6rem">Getting started</h2>
+      <details>
+        <summary>How do I install Splitr?</summary>
+        <div><p>Open Splitr in your browser and add it to your home screen. On iPhone use Safari's Share → Add to Home Screen. On Android use Chrome's Install app. On a computer use the install icon in Chrome or Edge's address bar. Step-by-step: <a href="index.html#install">Install</a>.</p></div>
+      </details>
+      <details>
+        <summary>How do I invite people to a group?</summary>
+        <div><p>Open the group and share its invite link, or tell people the 6-character code. They choose <b>Join</b> in Splitr and enter it. Anyone with the code can join, so share it only with the group.</p></div>
+      </details>
+      <details>
+        <summary>A friend doesn't want to install anything</summary>
+        <div><p>Add them by name when creating the group (or later). You can still include them in expenses and record their payments. If they join later, they tap "that's me" on their name and all their balances carry over. An admin can undo a wrong claim.</p></div>
+      </details>
+      <details>
+        <summary>Does it work offline?</summary>
+        <div><p>Yes. Expenses you add offline are saved on your device and sync automatically when you reconnect. Other members see them as soon as your phone is back online.</p></div>
+      </details>
+
+      <h2 id="accounts" style="font-size:1.6rem;margin-top:48px">Accounts &amp; sign-in</h2>
+      <details>
+        <summary>Guest account or Google: what's the difference?</summary>
+        <div><p>A guest account ("continue without account") lives only on the device where you made it. Signing in with Google keeps the same data on every device, and you can recover it if you lose your phone. You can start as a guest and switch to Google later from Profile.</p></div>
+      </details>
+      <details>
+        <summary>I signed in with Google, but my guest groups are gone</summary>
+        <div>
+          <p>If the Google account you picked <b>already had Splitr data</b>, Splitr switches you to that account. Your guest groups aren't merged into it. That's what the warning before sign-in means. They stay on the old guest account, which can't be reached again from that device.</p>
+          <p>If the Google account was <b>new to Splitr</b>, your guest data upgrades in place and nothing is lost.</p>
+          <p>Tip: before switching, ask a friend with a Google account to join your guest groups, so the data stays with the group.</p>
+        </div>
+      </details>
+      <details>
+        <summary>Sign-in with Google seems to do nothing</summary>
+        <div>
+          <ul>
+            <li>On Android the Google sign-in opens in a new tab. Wait for it to close itself, and don't press Back or switch tabs early.</li>
+            <li>If you see "This Google account is already used with Splitr… switch?", choose <b>OK</b> to switch. <b>Cancel</b> keeps you as a guest.</li>
+            <li>Allow pop-ups for Splitr, and try again in a normal (not private) window.</li>
+            <li>Still stuck? <a data-link="bug" href="https://github.com/anpixelartist/Splitr/issues/new">Report it</a> with your phone model and browser.</li>
+          </ul>
+        </div>
+      </details>
+      <details>
+        <summary>How do I delete my data?</summary>
+        <div><p>Admins can delete expenses or a whole group from the group screen. To have your account and profile removed, <a data-link="question" href="https://github.com/anpixelartist/Splitr/issues/new">contact us</a>. See <a href="privacy.html#your-rights">Privacy</a>.</p></div>
+      </details>
+
+      <h2 id="ai-connector" style="font-size:1.6rem;margin-top:48px">AI Connector</h2>
+      <details>
+        <summary>How do I use Splitr from Claude or ChatGPT?</summary>
+        <div><p>Add the connector address <code>https://splitr-mcp.splitr-mcp.workers.dev/mcp</code> as a custom connector, then sign in with Google. Step-by-step for each assistant: <a href="connector.html#connect">Connect it</a>.</p></div>
+      </details>
+      <details>
+        <summary>"Guest accounts can't be connected"</summary>
+        <div><p>The connector needs a Google sign-in. In the Splitr app, open Profile → <b>Sign in with Google</b>, then connect again.</p></div>
+      </details>
+      <details>
+        <summary>The connector won't add, or fails straight away</summary>
+        <div><p>Make sure the address ends in <code>/mcp</code>. On Claude's free plan you can have only one custom connector, so remove another one first if you need to.</p></div>
+      </details>
+      <details>
+        <summary>My assistant keeps asking me to reconnect</summary>
+        <div><p>Your Google sign-in ended, for example after signing out everywhere. Click Connect and sign in again. Your Splitr data isn't affected.</p></div>
+      </details>
+
+      <h2 id="money" style="font-size:1.6rem;margin-top:48px">Expenses &amp; payments</h2>
+      <details>
+        <summary>Why does a payment say "pending"?</summary>
+        <div><p>A payment counts toward balances once the <b>receiver confirms</b> it, so nobody can quietly mark themselves as paid. It counts straight away if the receiver recorded it themselves or is name-only. Otherwise it confirms automatically after 7 days. The receiver can reject it, and whoever recorded it can cancel it while it's pending.</p></div>
+      </details>
+      <details>
+        <summary>Can I edit or delete an expense?</summary>
+        <div><p>The person who added an expense, or a group admin, can edit it. It keeps its original date and shows who edited it. Admins can delete expenses, with 5 seconds to Undo. Deleting an expense never removes recorded payments, because those are real money that changed hands.</p></div>
+      </details>
+      <details>
+        <summary>Why is someone's share one cent more than everyone else's?</summary>
+        <div><p>Some amounts don't divide evenly (₹100 ÷ 3). Splitr shares out the leftover cents so the shares always add up to the exact total.</p></div>
+      </details>
+      <details>
+        <summary>Can I change a group's currency?</summary>
+        <div><p>Each group has one currency, chosen when it's created. Splitr doesn't convert between currencies. For a trip across countries, pick the currency most expenses are in, or make a group per currency.</p></div>
+      </details>
+      <details>
+        <summary>Does Splitr send or receive money?</summary>
+        <div><p>No. Pay each other however you like and record it in Splitr. We never ask for card or bank details.</p></div>
+      </details>
+    </div>
+  </div>
+
+  <section id="contact">
+    <div class="container">
+      <div class="section-head center">
+        <h2>Still need help?</h2>
+        <p class="lead">Splitr is a small open-source project. GitHub is the quickest way to reach the people who build it.</p>
+      </div>
+      <div class="grid grid-3">
+        <article class="card">
+          <div class="icon-badge red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88M14.12 3.88 16 2M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6zM12 20v-9M6.53 9C4.6 8.8 3 7.1 3 5M6 13H2M3 21c0-2.1 1.7-3.9 3.8-4M20.97 5c0 2.1-1.6 3.8-3.5 4M22 13h-4M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg></div>
+          <h3>Report a bug</h3>
+          <p>Tell us what you did, what you expected, and your phone and browser. Screenshots help.</p>
+          <p style="margin-top:16px"><a class="btn btn-secondary btn-sm" data-link="bug" href="https://github.com/anpixelartist/Splitr/issues/new">Open a bug report</a></p>
+        </article>
+        <article class="card">
+          <div class="icon-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></div>
+          <h3>Suggest a feature</h3>
+          <p>Missing something your group needs? Ideas shape what we build next.</p>
+          <p style="margin-top:16px"><a class="btn btn-secondary btn-sm" data-link="feature" href="https://github.com/anpixelartist/Splitr/issues/new">Share an idea</a></p>
+        </article>
+        <article class="card">
+          <div class="icon-badge green"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>Ask a question</h3>
+          <p>Not a bug, not an idea, just unsure how something works? Ask away.</p>
+          <p style="margin-top:16px"><a class="btn btn-secondary btn-sm" data-link="question" href="https://github.com/anpixelartist/Splitr/issues/new">Ask a question</a></p>
+        </article>
+      </div>
+
+      <div id="security" class="callout warn" style="max-width:780px;margin:48px auto 0">
+        <strong>Security issues: please report privately</strong>
+        <p>If you find a way to see or change data you shouldn't, please don't open a public issue. Use GitHub's <a data-link="security" href="https://github.com/anpixelartist/Splitr/security/advisories/new">private vulnerability report</a>. We'll acknowledge it and keep you posted on the fix.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="brand" href="index.html"><img src="assets/logo.svg" alt="" width="30" height="30">Splitr</a>
+        <p class="muted" style="margin-top:12px;max-width:320px">Split group expenses fairly and settle up. Free and open source.</p>
+      </div>
+      <div>
+        <h4>Product</h4>
+        <ul>
+          <li><a data-link="app" href="https://splitr-bills.web.app">Open the app</a></li>
+          <li><a href="index.html#features">Features</a></li>
+          <li><a href="index.html#install">Install</a></li>
+          <li><a href="connector.html">AI Connector</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Developers</h4>
+        <ul>
+          <li><a href="developers.html">Documentation</a></li>
+          <li><a href="developers.html#self-host">Self-host</a></li>
+          <li><a href="connector.html#tools">MCP tools</a></li>
+          <li><a data-link="repo" href="https://github.com/anpixelartist/Splitr">GitHub</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <ul>
+          <li><a href="support.html">Support</a></li>
+          <li><a data-link="bug" href="https://github.com/anpixelartist/Splitr/issues/new">Report a bug</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+          <li><a href="support.html#security">Security</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span data-year>2026</span> Splitr. Apache-2.0 licensed.</span>
+      <span>Made for friends who split things.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/site.js"></script>
+</body>
+</html>
