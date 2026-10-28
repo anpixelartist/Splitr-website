@@ -19,7 +19,7 @@ assets/css/site.css, assets/js/site.js, assets/logo.svg
 Edit the `SPLITR` object at the top of `assets/js/site.js`:
 
 - `appUrl`: the deployed app, `https://splitr-bills.web.app` (every "Open Splitr" button points here)
-- `mcpUrl`: the connector endpoint, `https://splitr-mcp.splitr-mcp.workers.dev/mcp`
+- `mcpUrl`: the connector endpoint, `https://splitr-mcp.splitr.workers.dev/mcp`
 - `connectorLive`: `true` (live). Set to `false` to switch the badges and callouts back to "In development"
 
 The HTML also carries these addresses as fallbacks for visitors without JavaScript, so update both if they change.
@@ -35,7 +35,16 @@ python3 -m http.server 8080   # then open http://localhost:8080
 
 ## Deploy (free)
 
-Any static host works (Firebase Hosting, Cloudflare Pages, GitHub Pages, Netlify). For Firebase, in the same project as the app:
+Live on Cloudflare (Workers static assets, free plan): https://www.splitr.workers.dev
+
+`wrangler.jsonc` serves `dist/` with clean URLs and `404.html`; `_headers` caches `/assets` for a day. To redeploy:
+
+```bash
+rm -rf dist && mkdir dist && cp -r *.html assets _headers dist/
+npx wrangler@4 deploy
+```
+
+Any other static host works too (Firebase Hosting, GitHub Pages, Netlify). For Firebase, in the same project as the app:
 
 ```bash
 npx firebase-tools@15 hosting:sites:create splitr-site   # a second site next to the app

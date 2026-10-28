@@ -6,7 +6,7 @@
 const SPLITR = {
   appUrl: 'https://splitr-bills.web.app',
   repoUrl: 'https://github.com/anpixelartist/Splitr',
-  mcpUrl: 'https://splitr-mcp.splitr-mcp.workers.dev/mcp',
+  mcpUrl: 'https://splitr-mcp.splitr.workers.dev/mcp',
   connectorLive: true,
 };
 

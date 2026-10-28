@@ -65,7 +65,7 @@
 
     <article class="prose">
       <h2 id="quick-start">Quick start</h2>
-      <p>You need <b>Node.js 20+</b> and Git.</p>
+      <p>You need <b>Node.js 22+</b> and Git.</p>
       <pre data-copy><code>git clone https://github.com/anpixelartist/Splitr.git
 cd Splitr
 npm install
@@ -106,7 +106,7 @@ mcp/                        AI connector: Cloudflare Worker (MCP server + OAuth)
             <tr><td><code>npm run dev</code></td><td>Dev server with hot reload</td></tr>
             <tr><td><code>npm run build</code></td><td>Type-check and production build into <code>dist/</code></td></tr>
             <tr><td><code>npm test</code></td><td>Unit tests (<code>src/**/*.test.ts</code>)</td></tr>
-            <tr><td><code>npm run test:rules</code></td><td>Firestore security-rules tests on the emulator (needs Java 11+)</td></tr>
+            <tr><td><code>npm run test:rules</code></td><td>Firestore security-rules tests on the emulator (needs Java 21+)</td></tr>
             <tr><td><code>npm run lint</code></td><td>oxlint</td></tr>
             <tr><td><code>npm run deploy</code></td><td>Build and deploy hosting + rules to Firebase</td></tr>
           </tbody>
@@ -165,7 +165,7 @@ npm run deploy</code></pre></li>
       </div>
 
       <h2 id="mcp">MCP server</h2>
-      <p>The <a href="connector.html">Splitr AI Connector</a> is a remote MCP server in the repo's <code>mcp/</code> folder. It runs on Cloudflare Workers (free plan) at <code>https://splitr-mcp.splitr-mcp.workers.dev/mcp</code>. <span class="pill green" data-connector-status>Available</span></p>
+      <p>The <a href="connector.html">Splitr AI Connector</a> is a remote MCP server in the repo's <code>mcp/</code> folder. It runs on Cloudflare Workers (free plan) at <code>https://splitr-mcp.splitr.workers.dev/mcp</code>. <span class="pill green" data-connector-status>Available</span></p>
       <h3>Design rules</h3>
       <ul>
         <li><b>Acts as the user.</b> No Firebase Admin SDK or service account. Every Firestore REST call carries the user's own ID token, so <code>firestore.rules</code> decides everything. <code>test/integration</code> proves it against the emulators.</li>
