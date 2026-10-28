@@ -92,13 +92,13 @@
       <h2 id="connect">Connect it</h2>
       <p>You'll need a Splitr account signed in with <b>Google</b>. Guest accounts ("continue without account") are turned away at sign-in. Switch to Google in the app's Profile screen first.</p>
       <p>The connector's address (it must end in <code>/mcp</code>):</p>
-      <pre data-copy><code data-mcp-url>https://splitr-mcp.splitr-mcp.workers.dev/mcp</code></pre>
+      <pre data-copy><code data-mcp-url>https://splitr-mcp.splitr.workers.dev/mcp</code></pre>
 
       <h3>Claude</h3>
       <ol>
         <li>Open <b>Settings → Connectors</b> and choose <b>Add custom connector</b>.</li>
         <li>Name it <code>Splitr</code>, paste the address above, and click <b>Add</b>.</li>
-        <li>Click <b>Connect</b>. A window opens: check that the app is Splitr and that "Access goes to" shows <code>splitr-mcp.splitr-mcp.workers.dev</code>, then tap <b>Sign in with Google to connect Splitr</b> and pick your account.</li>
+        <li>Click <b>Connect</b>. A window opens: check that the app is Splitr and that "Access goes to" shows <code>splitr-mcp.splitr.workers.dev</code>, then tap <b>Sign in with Google to connect Splitr</b> and pick your account.</li>
         <li>In a chat, turn Splitr on from the tools menu and ask away.</li>
       </ol>
 
@@ -110,7 +110,7 @@
       </ol>
 
       <h3>Claude Code and other MCP clients</h3>
-      <pre data-copy><code>claude mcp add --transport http splitr <span data-mcp-url>https://splitr-mcp.splitr-mcp.workers.dev/mcp</span></code></pre>
+      <pre data-copy><code>claude mcp add --transport http splitr <span data-mcp-url>https://splitr-mcp.splitr.workers.dev/mcp</span></code></pre>
       <p>Then run <code>/mcp</code> in Claude Code to sign in. Other clients take the same URL as a "remote" or "Streamable HTTP" server.</p>
       <p class="muted">Menu names in assistants change often. If a step doesn't match, look for "connectors", "integrations" or "MCP servers" in settings.</p>
 
